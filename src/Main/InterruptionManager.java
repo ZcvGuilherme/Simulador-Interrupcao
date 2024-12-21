@@ -4,14 +4,18 @@ import java.util.PriorityQueue;
 
 public class InterruptionManager {
 
-    // Gera uma interrupção de Timer
+    /**
+     * Método simples para adicionar em uma fila de interrupções uma interrupção do tipo Timer
+     * 
+     * @param Recebe um PriorityQueue<Interruption> nomeado de fila
+     * 
+     */
     public static void gerarInterrupcaoTimer(PriorityQueue<Interruption> fila) {
         Interruption timer = new Interruption(InterruptType.TIMER);
         fila.add(timer);
         System.out.println("Interrupção de Timer gerada! \n");
     }
-
-    // Gera uma interrupção de I/O
+ 
     public static void gerarInterrupcaoIO(PriorityQueue<Interruption> fila) {
         Interruption io = new Interruption(InterruptType.IO);
         fila.add(io);

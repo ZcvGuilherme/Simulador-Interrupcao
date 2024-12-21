@@ -10,9 +10,24 @@ public class Interruption implements Comparable<Interruption>{
 	public InterruptType getTipo() {
 		return tipo;
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public int getPrioridade() {
 		return tipo.getPrioridade();
 	}
+	
+	/**
+	 * Descrever o metodo
+	 * @param descrever o parametro
+	 * @return descrever o retorno
+	 */
+	@SuppressWarnings("unused")
+	private int metodo(int a) {
+		return 0;
+	}
+	
 	@Override
 	public int compareTo(Interruption o) {
 		return Integer.compare(tipo.getPrioridade(), o.getPrioridade());

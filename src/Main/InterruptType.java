@@ -13,6 +13,4 @@ public enum InterruptType {
 	public int getPrioridade() {
 		return prioridade;
 	}
-	
-
 }
