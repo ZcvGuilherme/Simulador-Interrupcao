@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -114,85 +114,72 @@ public class TelaPrincipal extends Tela {
     }
 
     private void exibirWidget(InterruptType tipo) {
-        // Posição inicial do widget fora da tela, na parte inferior do painel direito
         int widgetYPosition = painelDireito.getPainel().getHeight();
-
-        // Criação do widget
         Widget novoWidget = new Widget(tipo);
         novoWidget.getPainel().setBounds(0, widgetYPosition, painelDireito.getPainel().getWidth(), alturaWidget);
 
-        // Adicionando o widget à lista de widgets ativos
         widgetsAtivos.add(novoWidget);
-        
-        // Adicionando o widget ao painel direito
         painelDireito.getPainel().add(novoWidget.getPainel());
 
-        // Posição final (acima dos widgets existentes)
         int posicaoFinalY = margemSuperior + (alturaWidget * (painelDireito.getPainel().getComponentCount() - 1));
 
-        // Timer para animar o movimento do widget
         Timer timerAnimacao = new Timer(10, null);
-
         timerAnimacao.addActionListener(e -> {
-            // Movimento do widget para cima
             if (novoWidget.getPainel().getY() > posicaoFinalY) {
                 novoWidget.getPainel().setLocation(novoWidget.getPainel().getX(), novoWidget.getPainel().getY() - 5);
             } else {
-                timerAnimacao.stop(); // Para a animação ao atingir a posição final
-                painelDireito.getPainel().revalidate(); // Atualiza o layout
-                painelDireito.getPainel().repaint();   // Repinta o painel
+                timerAnimacao.stop();
+                painelDireito.getPainel().revalidate();
+                painelDireito.getPainel().repaint();
             }
         });
 
         timerAnimacao.setRepeats(true);
         timerAnimacao.start();
+
+        // Definir o listener para saber quando a animação é concluída
+        novoWidget.setListener(new AnimaçãoCompletaListener() {
+            @Override
+            public void onAnimaçãoCompleta(Widget widget) {
+                // Aqui você pode fazer qualquer ação quando a animação for concluída
+                System.out.println("Animação do widget " + widget.getTipo().name() + " completada!");
+            }
+        });
     }
+
 
     private void processarErros() {
-        // Ordenar widgets com base na prioridade (definido pelo tipo de erro)
+        // Ordenar os widgets por prioridade (de 1 para cima)
         widgetsAtivos.sort(Comparator.comparingInt(widget -> widget.getTipo().getPrioridade()));
 
-        // Para cada widget, anima o desaparecimento e movimenta os widgets acima
-        for (Widget widget : widgetsAtivos) {
-            Timer timerAnimacao = new Timer(10, null);
+        // Timer para processar um erro por vez a cada 0.3 segundos
+        Timer timer = new Timer(300, e -> {
+            if (!widgetsAtivos.isEmpty()) {
+                // Obter o primeiro widget (com maior prioridade)
+                Widget widget = widgetsAtivos.get(0);
 
-            // Animação de desaparecimento do widget
-            timerAnimacao.addActionListener(e -> {
-                if (widget.getOpacidade() > 0) {
-                    widget.setOpacidade(widget.getOpacidade() - 0.05f); // Faz o widget desaparecer
-                } else {
-                    // Remove o widget da tela
-                    painelDireito.getPainel().remove(widget.getPainel());
-                    painelDireito.getPainel().revalidate();
-                    painelDireito.getPainel().repaint();
+                // Resolver a interrupção (pode ser um texto ou mudança de cor)
+                widget.resolverInterrupcao();
 
-                    // Ajusta a posição dos widgets acima
-                    ajustarWidgets();
-                    timerAnimacao.stop();
+                // Remover o widget do painel e da lista de widgets ativos
+                painelDireito.getPainel().remove(widget.getPainel());
+                widgetsAtivos.remove(widget);
+
+                // Atualizar a interface para refletir a remoção
+                painelDireito.getPainel().revalidate();
+                painelDireito.getPainel().repaint();
+
+                // Verifica se ainda há widgets para processar
+                if (widgetsAtivos.isEmpty()) {
+                    // Parar o timer quando todos os widgets forem processados
+                    ((Timer) e.getSource()).stop();  // Usar o timer atual para parar
+                    JOptionPane.showMessageDialog(tela, "Todos os erros foram processados!");
                 }
-            });
+            }
+        });
 
-            timerAnimacao.setRepeats(true);  // O Timer repete a ação a cada 10 milissegundos
-            timerAnimacao.start();           // Inicia o Timer
-        }
+        // Iniciar o processamento dos erros
+        timer.start();
     }
 
-
-    private void ajustarWidgets() {
-        // Ajustar a posição dos widgets restantes após a remoção
-        for (int i = 0; i < painelDireito.getPainel().getComponentCount(); i++) {
-            JPanel widget = (JPanel) painelDireito.getPainel().getComponent(i);
-            int novaPosicaoY = margemSuperior + (alturaWidget * i);
-            
-            // Anima a movimentação dos widgets para cima
-            Timer moverWidgetTimer = new Timer(10, e -> {
-                if (widget.getY() > novaPosicaoY) {
-                    widget.setLocation(widget.getX(), widget.getY() - 5);
-                } else {
-                    ((Timer)e.getSource()).stop();
-                }
-            });
-            moverWidgetTimer.start();
-        }
-    }
 }
