@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.ToolTipManager;
 
-import Main.InterruptType;
+import main.InterruptType;
 
 public class Widget {
     private AnimaçãoCompletaListener listener;

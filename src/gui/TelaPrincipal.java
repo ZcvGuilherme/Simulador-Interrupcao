@@ -13,7 +13,7 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import Main.InterruptType;
+import main.InterruptType;
 
 public class TelaPrincipal extends Tela {
     private Color marromSuave = new Color(100, 50, 20);

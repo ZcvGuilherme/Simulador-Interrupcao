@@ -7,14 +7,12 @@ import javax.swing.border.EmptyBorder;
 
 public class Botao {
     protected JButton botao;
-
-    // Construtor para criar um botão com tamanho, texto e cor personalizados
     public Botao(String texto, int largura, int altura, Color corDeFundo) {
         botao = new JButton(texto);
-        botao.setPreferredSize(new Dimension(largura, altura)); // Define o tamanho do botão
-        botao.setBackground(corDeFundo); // Define a cor de fundo do botão
-        botao.setFocusPainted(false); // Remove o efeito de foco ao clicar
-        botao.setBorder(new EmptyBorder(10, 20, 10, 20)); // Define o espaçamento interno
+        botao.setPreferredSize(new Dimension(largura, altura)); 
+        botao.setBackground(corDeFundo); 
+        botao.setFocusPainted(false); 
+        botao.setBorder(new EmptyBorder(10, 20, 10, 20)); 
     }
 
     // Método para obter o botão
@@ -22,7 +20,6 @@ public class Botao {
         return botao;
     }
 
-    // Método para definir a visibilidade do botão
     public void setVisivel(boolean visivel) {
         botao.setVisible(visivel);
     }
