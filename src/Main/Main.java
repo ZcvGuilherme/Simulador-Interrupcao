@@ -6,17 +6,14 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         // Fila de prioridade para interrupções
+    	//Exemplo de mudança
         PriorityQueue<Interruption> filaDeInterrupcoes = new PriorityQueue<>();
-
-        // Thread geradora de interrupções
         Thread geradorDeInterrupcoes = new Thread(() -> {
             Random random = new Random();
             while (true) {
                 try {
                     int intervalo = 1000 + random.nextInt(4000);
                     Thread.sleep(intervalo);
-
-                    // Gera aleatoriamente de 1 a 3 interrupções por vez
                     int numeroDeInterrupcoes = 1 + random.nextInt(3);
                     for (int i = 0; i < numeroDeInterrupcoes; i++) {
                         int tipoAleatorio = random.nextInt(3); // 0, 1 ou 2
