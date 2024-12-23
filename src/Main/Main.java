@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        // Fila de prioridade para interrupções
     	//Exemplo de mudança
+    	//Assim que terminar rode o codigo novamente:
         PriorityQueue<Interruption> filaDeInterrupcoes = new PriorityQueue<>();
         Thread geradorDeInterrupcoes = new Thread(() -> {
             Random random = new Random();
