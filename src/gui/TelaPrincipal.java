@@ -142,7 +142,7 @@ public class TelaPrincipal extends Tela {
             @Override
             public void onAnimaçãoCompleta(Widget widget) {
                 // Aqui você pode fazer qualquer ação quando a animação for concluída
-                System.out.println("Animação do widget " + widget.getTipo().name() + " completada!");
+                System.out.println("Interrupção " + widget.getTipo().name() + " processada com sucesso!");
             }
         });
     }
