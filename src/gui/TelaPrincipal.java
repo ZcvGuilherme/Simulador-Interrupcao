@@ -19,7 +19,7 @@ public class TelaPrincipal extends Tela {
     private Color marromSuave = new Color(100, 50, 20);
     private Color marromEscuro = new Color(75, 40, 15);
     private Color laranjaSuave = new Color(255, 223, 186);
-    private Color destaqueProcessar = new Color(255, 102, 0); // Cor vibrante para o botão de Processar
+    private Color destaqueProcessar = new Color(255, 102, 0); 
 
     private Botao Timer;
     private Botao IO;
@@ -81,9 +81,7 @@ public class TelaPrincipal extends Tela {
         Timer.getBotao().setBounds(80, 100, 200, 50);
         IO.getBotao().setBounds(80, 160, 200, 50);
         SysError.getBotao().setBounds(80, 220, 200, 50);
-        
-        // Posicionando o botão "Processar Erros" mais para baixo
-        processar.getBotao().setBounds(80, 500, 200, 50); // Mais para baixo no painel central
+        processar.getBotao().setBounds(80, 500, 200, 50); 
 
         painelCentral.addComponente(Timer.getBotao());
         painelCentral.addComponente(IO.getBotao());
@@ -141,15 +139,13 @@ public class TelaPrincipal extends Tela {
         novoWidget.setListener(new AnimaçãoCompletaListener() {
             @Override
             public void onAnimaçãoCompleta(Widget widget) {
-                // Aqui você pode fazer qualquer ação quando a animação for concluída
                 System.out.println("Interrupção " + widget.getTipo().name() + " processada com sucesso!");
             }
         });
     }
 
-
     private void processarErros() {
-        // Ordenar os widgets por prioridade (de 1 para cima)
+        // Ordenar os widgets por prioridade
         widgetsAtivos.sort(Comparator.comparingInt(widget -> widget.getTipo().getPrioridade()));
 
         // Timer para processar um erro por vez a cada 0.3 segundos
